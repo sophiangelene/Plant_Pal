@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 3
   tags:
   - Anchor
+  - WaterReceiver
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - WaterableObjects
   - Water
   - UI
   - 
