@@ -187,4 +187,10 @@ public class WaterReceiver : MonoBehaviour
         SetGrowthStage(0); // Go back to the very first model
         Debug.Log($"{gameObject.name} reset to initial growth state.");
     }
+
+    // Get status of plant
+    public bool getIsFullyGrown()
+    {
+        return isFullyGrown;
+    }
 }

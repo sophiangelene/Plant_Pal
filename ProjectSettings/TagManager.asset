@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Anchor
   - WaterReceiver
+  - WateringCan
   layers:
   - Default
   - TransparentFX
