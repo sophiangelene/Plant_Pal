@@ -8,6 +8,8 @@ public class WaterReceiver : MonoBehaviour
     [Header("UI & Progress Settings")]
     [Tooltip("Drag the UI Slider GameObject for this object's progress bar here.")]
     public Slider progressBarUI;
+    private PourDetector pourDetector;
+    public string pourDetectorTag = "WateringCan";
 
     [Tooltip("The TOTAL time in seconds required for the plant to grow through ALL stages.")]
     public float totalGrowthTime = 4.0f; // Renamed from requiredPouringTime for clarity
@@ -67,6 +69,14 @@ public class WaterReceiver : MonoBehaviour
             Debug.LogError($"WaterReceiver on {gameObject.name}: Growth stage thresholds count mismatch! " +
                            $"Expected {growthStages.Length - 1} thresholds for {growthStages.Length} stages, got {growthStageThresholds.Length}.", this);
             enabled = false; // Disable if misconfigured
+        }
+
+        // Find the GameObject by tag
+        GameObject pourDetectorObject = GameObject.FindWithTag(pourDetectorTag);
+        if (pourDetectorObject != null)
+        {
+            // Get the PourDetector component from that GameObject
+            pourDetector = pourDetectorObject.GetComponent<PourDetector>();
         }
     }
 
@@ -157,6 +167,11 @@ public class WaterReceiver : MonoBehaviour
                 if (currentPouringTime >= thresholdTime)
                 {
                     SetGrowthStage(currentGrowthStageIndex + 1); // Advance to the next stage
+                    if (pourDetector.currentWaterUnits > 0)
+                    {
+                        pourDetector.currentWaterUnits--;
+                        Debug.Log($"Current water: {pourDetector.currentWaterUnits}");
+                    }
                 }
             }
         }
@@ -173,7 +188,7 @@ public class WaterReceiver : MonoBehaviour
         }
     }
 
-    //Resets the plant's entire lifecycle (e.g., for replanting)
+    // Resets the plant's entire lifecycle (e.g., for replanting)
     public void ResetPlantToInitialState()
     {
         currentPouringTime = 0f;
