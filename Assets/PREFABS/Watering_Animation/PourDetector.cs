@@ -9,6 +9,10 @@ public class PourDetector : MonoBehaviour
     public bool isPouring = false;
     private Stream currentStream = null;
 
+    // Track water status   
+    public int currentWaterUnits = 3;
+    public int totalWaterUnits = 3;
+
     void Start()
     {
 
@@ -17,13 +21,18 @@ public class PourDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentWaterUnits == 0)
+        {
+            EndPour();
+        }
+
         bool pourCheck = CalculatePourAngle() < pourThreshold;
 
         if (isPouring != pourCheck)
         {
             isPouring = pourCheck;
 
-            if (isPouring)
+            if (isPouring && currentWaterUnits > 0)
             {
                 StartPour();
             }
@@ -44,7 +53,10 @@ public class PourDetector : MonoBehaviour
     private void EndPour()
     {
         print("End");
-        currentStream.End();
+        if (currentStream != null)
+        {
+            currentStream.End();
+        }
         currentStream = null;
     }
 

@@ -27,7 +27,7 @@ public class WateringCanDetector : MonoBehaviour
     private Collider[] hitCollidersBuffer = new Collider[10];
 
     // Added to track the previous state of isPouring
-    private bool wasPouringLastFrame = false; 
+    private bool wasPouringLastFrame = false;
 
     void Awake()
     {
@@ -56,7 +56,7 @@ public class WateringCanDetector : MonoBehaviour
     {
         if (pourAreaCollider == null || pourDetector == null) return; // Ensure all references are set
 
-        bool isCurrentlyPouring = pourDetector.isPouring; //Get the current pouring state
+        bool isCurrentlyPouring = pourDetector.isPouring; // Get the current pouring state
 
         // --- Handle the state change for isPouring ---
         if (!isCurrentlyPouring && wasPouringLastFrame)
@@ -94,7 +94,7 @@ public class WateringCanDetector : MonoBehaviour
                 if (hitCollider != null && hitCollider.CompareTag(waterReceiverTag))
                 {
                     WaterReceiver receiver = hitCollider.GetComponent<WaterReceiver>();
-                    if (receiver != null)
+                    if (receiver != null && pourDetector.currentWaterUnits > 0)
                     {
                         newDetectionThisFrame.Add(receiver);
 
