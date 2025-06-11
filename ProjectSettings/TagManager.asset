@@ -8,6 +8,7 @@ TagManager:
   - WaterReceiver
   - WateringCan
   - Pot
+  - Recipe
   layers:
   - Default
   - TransparentFX
